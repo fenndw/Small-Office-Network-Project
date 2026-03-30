@@ -70,28 +70,21 @@ insert into Robes values
 select * from StockData;
 ```
 
-Additional Work
-Fixed SSMS admin permissions
+### Additional Work:
+- Fixed SSMS admin permissions
+- Configured Windows Firewall rules to allow remote DB access
+- Verified Windows 10 and 11 clients could query the database
+- Created shared folder ShareStuff with appropriate permissions
 
-Configured Windows Firewall rules to allow remote DB access
+## Phase 2 – Network Expansion & Hardening
 
-Verified Windows 10 and 11 clients could query the database
-
-Created shared folder ShareStuff with appropriate permissions
-
-Phase 2 – Network Expansion & Hardening
-Goals
-Add redundancy and improve reliability
-
-Implement secure application hosting
-
-Deploy FTP services with AD‑based access
-
-Introduce Group Policy for security
-
-Configure NPS/RADIUS
-
-Implement automated backups
+### Goals:
+- Add redundancy and improve reliability
+- Implement secure application hosting
+- Deploy FTP services with AD‑based access
+- Introduce Group Policy for security
+- Configure NPS/RADIUS
+- Implement automated backups
 
 Updated Network Diagram (Phase 2)
 | System                | IP Address        | Subnet Mask       | Default Gateway   | DNS Server(s)          |
@@ -103,114 +96,96 @@ Updated Network Diagram (Phase 2)
 | **Windows 11 Client** | 192.168.100.42    | 255.255.255.0      | 192.168.100.1      | 192.168.100.10          |
 | **Windows 10 Client** | 192.168.100.48    | 255.255.255.0      | 192.168.100.1      | 192.168.100.10          |
 
+<img width="975" height="692" alt="image" src="https://github.com/user-attachments/assets/0ee49165-6b26-4d16-a528-0cf091357562" />
 
-Active Directory & Permissions
-OU Structure
-Cleaned up test OUs and users
 
-Implemented new OUs for servers and security groups
+## Active Directory & Permissions
 
-Security Groups
-Created SG_SecureFTP_Users  
-Members:
+### OU Structure
+- Cleaned up test OUs and users
+- Implemented new OUs for servers and security groups
 
-fenn.admin
-
-BackUpFenn
-
+### Security Groups
+- Created SG_SecureFTP_Users  
+- Members:
+    - fenn.admin
+    - BackUpFenn
 Used for FTP and RADIUS authentication.
 
-Admin Account Separation
-fenn.admin and BackUpFenn are the only administrative accounts
+### Admin Account Separation
+- fenn.admin and BackUpFenn are the only administrative accounts
+- Built‑in Administrator remains disabled for security
 
-Built‑in Administrator remains disabled for security
+## Server Roles (Phase 2)
 
-Server Roles (Phase 2)
-Primary Domain Controller (DC)
-AD DS
+### Primary Domain Controller (DC)
+- AD DS
+- DNS
+- DHCP
 
-DNS
+### Backup Domain Controller (DC‑BKP)
+- Additional domain controller
+- DNS replica
+- Backup target for DC and appsrv01
 
-DHCP
+### Application / File / DB Server (appsrv01)
+- IIS Web Server
+- FTP Server
+- File Server Resource Manager (FSRM)
+- Network Policy Server (NPS)
+- MySQL database
 
-Backup Domain Controller (DC‑BKP)
-Additional domain controller
+### OPNSense
+- Router
+- Firewall
+- RADIUS client
 
-DNS replica
+## Group Policy Enhancements
+- Enabled auditing of system events for administrators
+- Disabled removable media (USB, external drives, CDs/DVDs) for users
 
-Backup target for DC and appsrv01
+## Secure Application Hosting (appsrv01)
 
-Application / File / DB Server (appsrv01)
-IIS Web Server
+### IIS Web Server
+- Created a simple website with an index page
+- Added DNS CNAME: secureportal.yourdomain.local → appsrv01
 
-FTP Server
+### FTP Server
+- Created SecureFTP site
+- Mapped to C:\FTP_Root
+- Enabled Basic Authentication
+- Authorized SG_SecureFTP_Users
+- Verified read/write access
 
-File Server Resource Manager (FSRM)
+### FSRM
+- 200MB hard quota on FTP root
+- File screen to block .exe, .bat, and other executables
 
-Network Policy Server (NPS)
+### NPS / RADIUS
+- Registered NPS in Active Directory
+- Added OPNSense as a RADIUS client
+- Created Network Policy for SG_SecureFTP_Users
 
-MySQL database
+---
 
-OPNSense
-Router
+## Backup Strategy
 
-Firewall
+### Backup Server (dc‑bkp01)
+- Installed Windows Server Backup
+- Created shared folder C:\Backups
 
-RADIUS client
+### Scheduled Backups
+- Primary DC: System State → dc‑bkp01
+- appsrv01: System State + FTP data → dc‑bkp01
 
-Group Policy Enhancements
-Enabled auditing of system events for administrators
+### Troubleshooting
+- Disk space issues required adding a second virtual disk
+- Used the new disk as the backup target
+- Verified successful backup jobs from both servers
 
-Disabled removable media (USB, external drives, CDs/DVDs) for users
+---
 
-Secure Application Hosting (appsrv01)
-IIS Web Server
-Created a simple website with an index page
-
-Added DNS CNAME: secureportal.yourdomain.local → appsrv01
-
-FTP Server
-Created SecureFTP site
-
-Mapped to C:\FTP_Root
-
-Enabled Basic Authentication
-
-Authorized SG_SecureFTP_Users
-
-Verified read/write access
-
-FSRM
-200MB hard quota on FTP root
-
-File screen to block .exe, .bat, and other executables
-
-NPS / RADIUS
-Registered NPS in Active Directory
-
-Added OPNSense as a RADIUS client
-
-Created Network Policy for SG_SecureFTP_Users
-
-Backup Strategy
-Backup Server (dc‑bkp01)
-Installed Windows Server Backup
-
-Created shared folder C:\Backups
-
-Scheduled Backups
-Primary DC: System State → dc‑bkp01
-
-appsrv01: System State + FTP data → dc‑bkp01
-
-Troubleshooting
-Disk space issues required adding a second virtual disk
-
-Used the new disk as the backup target
-
-Verified successful backup jobs from both servers
-
-What I Learned
+## What I Learned
 - How to design and scale a small office network
 - How to implement redundancy and backup strategies
 - How to secure services using AD, FTP, IIS, and NPS
@@ -218,7 +193,7 @@ What I Learned
 - How to troubleshoot real‑world issues like disk expansion and permissions
 - How to evolve a simple environment into a structured, enterprise‑aligned system
 
-Technologies Used
+## Technologies Used
 - Windows Server 2025 / 2022
 - Windows 10 & 11
 - OPNSense
@@ -231,3 +206,9 @@ Technologies Used
 - Group Policy
 - Windows Server Backup
 - VMware
+
+<div align="center">
+
+[Back to Portfolio](https://github.com/fenndw)
+
+</div>
