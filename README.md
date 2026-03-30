@@ -89,6 +89,12 @@ Here is the Windows 11 Client accessing the database despite the database being 
 Here is the shared folder called ShareStuff with all associated permissions for each user:
 <img width="928" height="1212" alt="image" src="https://github.com/user-attachments/assets/f626a227-a094-4db7-84ea-1293c3827da7" />
 
+Here is some PowerShell scripting to create users:
+<img width="975" height="444" alt="image" src="https://github.com/user-attachments/assets/196f4d9c-b319-44fb-aa80-a6a5b38b74d1" />
+<img width="897" height="288" alt="image" src="https://github.com/user-attachments/assets/f9433dbd-1ecd-495b-bd02-58b301eeaf3f" />
+<img width="975" height="911" alt="image" src="https://github.com/user-attachments/assets/81f1b0a4-0077-4d66-be2a-070bfa8dc3d8" />
+
+
 ## Phase 2 – Network Expansion & Hardening
 
 ### Goals:
