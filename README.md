@@ -94,6 +94,7 @@ Here is some PowerShell scripting to create users:
 <img width="897" height="288" alt="image" src="https://github.com/user-attachments/assets/f9433dbd-1ecd-495b-bd02-58b301eeaf3f" />
 <img width="975" height="911" alt="image" src="https://github.com/user-attachments/assets/81f1b0a4-0077-4d66-be2a-070bfa8dc3d8" />
 
+---
 
 ## Phase 2 – Network Expansion & Hardening
 
@@ -104,6 +105,8 @@ Here is some PowerShell scripting to create users:
 - Introduce Group Policy for security
 - Configure NPS/RADIUS
 - Implement automated backups
+
+---
 
 Updated Network Diagram (Phase 2)
 | System                | IP Address        | Subnet Mask       | Default Gateway   | DNS Server(s)          |
@@ -117,6 +120,7 @@ Updated Network Diagram (Phase 2)
 
 <img width="975" height="692" alt="image" src="https://github.com/user-attachments/assets/0ee49165-6b26-4d16-a528-0cf091357562" />
 
+---
 
 ## Active Directory & Permissions
 
@@ -124,16 +128,28 @@ Updated Network Diagram (Phase 2)
 - Cleaned up test OUs and users
 - Implemented new OUs for servers and security groups
 
+---
+
 ### Security Groups
-- Created SG_SecureFTP_Users  
+- Created SG_SecureFTP_Users:
+<img width="625" height="774" alt="image" src="https://github.com/user-attachments/assets/2319c70a-6b6f-4979-92e5-b65875d15fbd" />
+  
 - Members:
     - fenn.admin
     - BackUpFenn
+
+Here it is in action:
+<img width="975" height="370" alt="image" src="https://github.com/user-attachments/assets/af082054-bb11-4e46-8dde-ab975808cb8e" />
+
 Used for FTP and RADIUS authentication.
+
+---
 
 ### Admin Account Separation
 - fenn.admin and BackUpFenn are the only administrative accounts
 - Built‑in Administrator remains disabled for security
+
+---
 
 ## Server Roles (Phase 2)
 
@@ -142,10 +158,18 @@ Used for FTP and RADIUS authentication.
 - DNS
 - DHCP
 
+Some DNS Manager screenshots:
+<img width="975" height="600" alt="image" src="https://github.com/user-attachments/assets/3a8b8d22-dd9d-4bcd-9cda-d28fef3907a2" />
+<img width="975" height="551" alt="image" src="https://github.com/user-attachments/assets/b94e5ce0-6cea-4182-9e3d-edee7d94a3be" />
+
+---
+
 ### Backup Domain Controller (DC‑BKP)
 - Additional domain controller
 - DNS replica
 - Backup target for DC and appsrv01
+
+---
 
 ### Application / File / DB Server (appsrv01)
 - IIS Web Server
@@ -153,6 +177,8 @@ Used for FTP and RADIUS authentication.
 - File Server Resource Manager (FSRM)
 - Network Policy Server (NPS)
 - MySQL database
+
+---
 
 ### OPNSense
 - Router
@@ -163,11 +189,18 @@ Used for FTP and RADIUS authentication.
 - Enabled auditing of system events for administrators
 - Disabled removable media (USB, external drives, CDs/DVDs) for users
 
+---
+
 ## Secure Application Hosting (appsrv01)
 
 ### IIS Web Server
 - Created a simple website with an index page
 - Added DNS CNAME: secureportal.yourdomain.local → appsrv01
+
+Here it is in action:
+<img width="975" height="285" alt="image" src="https://github.com/user-attachments/assets/ccb1631f-c974-4b06-b2af-71bc62fb84b8" />
+
+---
 
 ### FTP Server
 - Created SecureFTP site
@@ -176,14 +209,39 @@ Used for FTP and RADIUS authentication.
 - Authorized SG_SecureFTP_Users
 - Verified read/write access
 
+Here it is in action:
+<img width="975" height="858" alt="image" src="https://github.com/user-attachments/assets/83cf3174-3aa9-4b1a-abd7-6e8ade74b225" />
+<img width="975" height="435" alt="image" src="https://github.com/user-attachments/assets/5de5da51-d102-4128-951a-d54a1f3de481" />
+<img width="786" height="155" alt="image" src="https://github.com/user-attachments/assets/f78ecf75-ab5d-4a1c-856b-ddba43e6cc5f" />
+
+---
+
 ### FSRM
 - 200MB hard quota on FTP root
 - File screen to block .exe, .bat, and other executables
+
+Here it is in action: 
+<img width="717" height="512" alt="image" src="https://github.com/user-attachments/assets/844e49b9-9797-4504-bec7-e03f32179eb9" />
+<img width="706" height="660" alt="image" src="https://github.com/user-attachments/assets/64f3a19b-b81b-4e56-aac7-b22bfd32c59c" />
+
+---
 
 ### NPS / RADIUS
 - Registered NPS in Active Directory
 - Added OPNSense as a RADIUS client
 - Created Network Policy for SG_SecureFTP_Users
+  
+Here it is in action:
+<img width="916" height="517" alt="image" src="https://github.com/user-attachments/assets/8f542447-52b9-4250-ba95-9315c22e7d8d" />
+
+Authenticator successful for admin:
+<img width="672" height="550" alt="image" src="https://github.com/user-attachments/assets/abeb401d-83b4-454a-bda9-d98b7ede469d" />
+<img width="675" height="483" alt="image" src="https://github.com/user-attachments/assets/87b7eab4-50dd-4566-ab58-867e382e1f59" />
+
+Vs. test user without permissions:
+
+<img width="791" height="474" alt="image" src="https://github.com/user-attachments/assets/13763ba4-b359-4ad9-ab51-f1eb076e5c2b" />
+<img width="791" height="399" alt="image" src="https://github.com/user-attachments/assets/316c125d-bd42-41b7-a3ae-3ea1abedcf25" />
 
 ---
 
@@ -192,10 +250,15 @@ Used for FTP and RADIUS authentication.
 ### Backup Server (dc‑bkp01)
 - Installed Windows Server Backup
 - Created shared folder C:\Backups
-
+  
 ### Scheduled Backups
 - Primary DC: System State → dc‑bkp01
 - appsrv01: System State + FTP data → dc‑bkp01
+- 
+Here it is in action:
+<img width="802" height="814" alt="image" src="https://github.com/user-attachments/assets/546957a8-90c1-441b-a474-3ef24346a447" />
+
+---
 
 ### Troubleshooting
 - Disk space issues required adding a second virtual disk
