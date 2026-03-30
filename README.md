@@ -254,7 +254,7 @@ Vs. test user without permissions:
 ### Scheduled Backups
 - Primary DC: System State → dc‑bkp01
 - appsrv01: System State + FTP data → dc‑bkp01
-- 
+
 Here it is in action:
 <img width="802" height="814" alt="image" src="https://github.com/user-attachments/assets/546957a8-90c1-441b-a474-3ef24346a447" />
 
