@@ -69,6 +69,14 @@ insert into Robes values
 
 select * from StockData;
 ```
+<img width="717" height="705" alt="image" src="https://github.com/user-attachments/assets/05bfd2aa-f49d-46ef-b9e7-148326cf9c78" />
+
+<img width="900" height="588" alt="image" src="https://github.com/user-attachments/assets/a8e4ccac-aa5f-4b39-8f3a-31c88ef3197b" />
+
+Here is the Windows 11 Client accessing the database despite the database being on a dedicated database server:
+<img width="998" height="781" alt="image" src="https://github.com/user-attachments/assets/47da886d-cd3b-4da9-965d-856ff64abad1" />
+
+--- 
 
 ### Additional Work:
 - Fixed SSMS admin permissions
@@ -206,6 +214,8 @@ Used for FTP and RADIUS authentication.
 - Group Policy
 - Windows Server Backup
 - VMware
+
+---
 
 <div align="center">
 
