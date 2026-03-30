@@ -69,12 +69,11 @@ insert into Robes values
 
 select * from StockData;
 ```
+Here are a few screenshots from the database management and creation:
 <img width="717" height="705" alt="image" src="https://github.com/user-attachments/assets/05bfd2aa-f49d-46ef-b9e7-148326cf9c78" />
 
 <img width="900" height="588" alt="image" src="https://github.com/user-attachments/assets/a8e4ccac-aa5f-4b39-8f3a-31c88ef3197b" />
 
-Here is the Windows 11 Client accessing the database despite the database being on a dedicated database server:
-<img width="998" height="781" alt="image" src="https://github.com/user-attachments/assets/47da886d-cd3b-4da9-965d-856ff64abad1" />
 
 --- 
 
@@ -83,6 +82,12 @@ Here is the Windows 11 Client accessing the database despite the database being 
 - Configured Windows Firewall rules to allow remote DB access
 - Verified Windows 10 and 11 clients could query the database
 - Created shared folder ShareStuff with appropriate permissions
+
+Here is the Windows 11 Client accessing the database despite the database being on a dedicated database server:
+<img width="998" height="781" alt="image" src="https://github.com/user-attachments/assets/47da886d-cd3b-4da9-965d-856ff64abad1" />
+
+Here is the shared folder called ShareStuff with all associated permissions for each user:
+<img width="928" height="1212" alt="image" src="https://github.com/user-attachments/assets/f626a227-a094-4db7-84ea-1293c3827da7" />
 
 ## Phase 2 – Network Expansion & Hardening
 
